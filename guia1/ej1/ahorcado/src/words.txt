@@ -1,5 +1,0 @@
-escritura
-rust
-ferrocarril
-futbol
-lectura

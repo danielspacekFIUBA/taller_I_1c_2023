@@ -1,1 +1,0 @@
-/home/daniel/Documents/taller/guia_ejercicios/git/guia1/ej1/ahorcado/target/debug/ahorcado: /home/daniel/Documents/taller/guia_ejercicios/git/guia1/ej1/ahorcado/src/ahorcado.rs /home/daniel/Documents/taller/guia_ejercicios/git/guia1/ej1/ahorcado/src/main.rs /home/daniel/Documents/taller/guia_ejercicios/git/guia1/ej1/ahorcado/src/words.rs

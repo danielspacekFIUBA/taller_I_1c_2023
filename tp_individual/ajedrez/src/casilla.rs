@@ -1,11 +1,14 @@
+use crate::pieza::Pieza;
+
 #[derive(Debug)]
 pub struct Casilla {
-    x: u8,
-    y: u8,
+    pub x: usize,
+    pub y: usize,
+    pub pieza: Option<Pieza>
 }
 
 impl Casilla {
-    pub fn new(x: u8, y: u8) -> Self {
-        Casilla { x, y }
+    pub fn new(x: usize, y: usize, pieza: Option<Pieza>) -> Self {
+        Casilla { x, y, pieza }
     }
 }

@@ -1,60 +1,71 @@
+use crate::tipo_pieza::TipoPieza;
 
 #[derive(Debug, PartialEq)]
-pub enum Pieza{
-    Rey(Colores),
-    Reina(Colores),
-    Peon(Colores),
-    Alfil(Colores),
-    Torre(Colores),
-    Caballo(Colores)
+pub struct Pieza {
+    pub tipo_pieza: TipoPieza,
+    pub color: Color,
 }
 
 #[derive(Debug, PartialEq)]
-pub enum Colores{
+pub enum Color {
     Blanco,
-    Negro
+    Negro,
 }
 
-pub fn obtener_pieza(texto_casilla: &str) -> Option<Pieza> {
+impl Pieza {
+    pub fn new(tipo_pieza: TipoPieza, color: Color) -> Self {
+        Pieza { tipo_pieza, color }
+    }
+
+    pub fn es_blanca(&self) -> bool {
+        self.color == Color::Blanco
+    }
+
+    pub fn _es_negra(&self) -> bool {
+        self.color == Color::Negro
+    }
+}
+
+pub fn factory_pieza(texto_casilla: &str) -> Option<Pieza> {
     match texto_casilla {
-        "R" => Some(Pieza::Rey(Colores::Blanco)),
-        "Q" => Some(Pieza::Reina(Colores::Blanco)),
-        "P" => Some(Pieza::Peon(Colores::Blanco)),
-        "A" => Some(Pieza::Alfil(Colores::Blanco)),
-        "T" => Some(Pieza::Torre(Colores::Blanco)),
-        "C" => Some(Pieza::Caballo(Colores::Blanco)),
-        "r" => Some(Pieza::Rey(Colores::Negro)),
-        "q" => Some(Pieza::Reina(Colores::Negro)),
-        "p" => Some(Pieza::Peon(Colores::Negro)),
-        "a" => Some(Pieza::Alfil(Colores::Negro)),
-        "t" => Some(Pieza::Torre(Colores::Negro)),
-        "c" => Some(Pieza::Caballo(Colores::Negro)),
-        _ => None
+        "R" => Some(Pieza::new(TipoPieza::Rey, Color::Blanco)),
+        "Q" => Some(Pieza::new(TipoPieza::Reina, Color::Blanco)),
+        "P" => Some(Pieza::new(TipoPieza::Peon, Color::Blanco)),
+        "A" => Some(Pieza::new(TipoPieza::Alfil, Color::Blanco)),
+        "T" => Some(Pieza::new(TipoPieza::Torre, Color::Blanco)),
+        "C" => Some(Pieza::new(TipoPieza::Caballo, Color::Blanco)),
+        "r" => Some(Pieza::new(TipoPieza::Rey, Color::Negro)),
+        "q" => Some(Pieza::new(TipoPieza::Reina, Color::Negro)),
+        "p" => Some(Pieza::new(TipoPieza::Peon, Color::Negro)),
+        "a" => Some(Pieza::new(TipoPieza::Alfil, Color::Negro)),
+        "t" => Some(Pieza::new(TipoPieza::Torre, Color::Negro)),
+        "c" => Some(Pieza::new(TipoPieza::Caballo, Color::Negro)),
+        _ => None,
     }
 }
 
 #[test]
 fn test_pieza() {
-    let pieza1 = obtener_pieza("R");
+    let pieza1 = factory_pieza("R");
     assert!(pieza1.is_some());
-    assert_ne!(pieza1, Some(Pieza::Rey(Colores::Negro)));
-    assert_eq!(pieza1, Some(Pieza::Rey(Colores::Blanco)));
+    assert_ne!(pieza1, Some(Pieza::new(TipoPieza::Rey, Color::Negro)));
+    assert_eq!(pieza1, Some(Pieza::new(TipoPieza::Rey, Color::Blanco)));
 
-    let pieza2 = obtener_pieza("r");
+    let pieza2 = factory_pieza("r");
     assert!(pieza2.is_some());
-    assert_ne!(pieza2, Some(Pieza::Rey(Colores::Blanco)));
-    assert_eq!(pieza2, Some(Pieza::Rey(Colores::Negro)));
+    assert_ne!(pieza2, Some(Pieza::new(TipoPieza::Rey, Color::Blanco)));
+    assert_eq!(pieza2, Some(Pieza::new(TipoPieza::Rey, Color::Negro)));
 
-    let pieza3 = obtener_pieza("Q");
+    let pieza3 = factory_pieza("Q");
     assert!(pieza3.is_some());
-    assert_ne!(pieza3, Some(Pieza::Torre(Colores::Blanco)));
-    assert_eq!(pieza3, Some(Pieza::Reina(Colores::Blanco)));
+    assert_ne!(pieza3, Some(Pieza::new(TipoPieza::Torre, Color::Blanco)));
+    assert_eq!(pieza3, Some(Pieza::new(TipoPieza::Reina, Color::Blanco)));
 
-    let pieza4 = obtener_pieza("t");
+    let pieza4 = factory_pieza("t");
     assert!(pieza4.is_some());
-    assert_ne!(pieza4, Some(Pieza::Torre(Colores::Blanco)));
-    assert_eq!(pieza4, Some(Pieza::Torre(Colores::Negro)));
+    assert_ne!(pieza4, Some(Pieza::new(TipoPieza::Torre, Color::Blanco)));
+    assert_eq!(pieza4, Some(Pieza::new(TipoPieza::Torre, Color::Negro)));
 
-    let pieza5 = obtener_pieza("_");
+    let pieza5 = factory_pieza("_");
     assert!(pieza5.is_none());
 }

@@ -44,8 +44,14 @@ fn test_casilla() {
 
 #[test]
 fn test_casilla_gana_blanca() {
-    let reina_blanca = Pieza::new(crate::tipo_pieza::TipoPieza::Reina, crate::pieza::Color::Blanco);
-    let rey_negro = Pieza::new(crate::tipo_pieza::TipoPieza::Rey, crate::pieza::Color::Negro);
+    let reina_blanca = Pieza::new(
+        crate::tipo_pieza::TipoPieza::Reina,
+        crate::pieza::Color::Blanco,
+    );
+    let rey_negro = Pieza::new(
+        crate::tipo_pieza::TipoPieza::Rey,
+        crate::pieza::Color::Negro,
+    );
 
     let casilla_reina_blanca = Casilla::new(0, 0, Some(reina_blanca));
     let casilla_rey_negro = Casilla::new(6, 6, Some(rey_negro));
@@ -56,8 +62,14 @@ fn test_casilla_gana_blanca() {
 
 #[test]
 fn test_casilla_gana_negra() {
-    let torre_blanca = Pieza::new(crate::tipo_pieza::TipoPieza::Torre, crate::pieza::Color::Blanco);
-    let rey_negro = Pieza::new(crate::tipo_pieza::TipoPieza::Rey, crate::pieza::Color::Negro);
+    let torre_blanca = Pieza::new(
+        crate::tipo_pieza::TipoPieza::Torre,
+        crate::pieza::Color::Blanco,
+    );
+    let rey_negro = Pieza::new(
+        crate::tipo_pieza::TipoPieza::Rey,
+        crate::pieza::Color::Negro,
+    );
 
     let casilla_torre_blanca = Casilla::new(2, 2, Some(torre_blanca));
     let casilla_rey_negro = Casilla::new(3, 3, Some(rey_negro));

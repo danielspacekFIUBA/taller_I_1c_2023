@@ -102,4 +102,3 @@ fn test_casilla_pieza_negra() {
     assert_eq!(casillas_pieza_blanca.coordenadas.x, 4);
     assert_eq!(casillas_pieza_blanca.coordenadas.y, 3);
 }
-

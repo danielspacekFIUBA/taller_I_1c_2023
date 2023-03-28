@@ -12,13 +12,13 @@ use std::env;
 use ajedrez::ResultadoAjedrez;
 use errores::AjedrezError;
 
-use crate::{ajedrez::Ajedrez};
+use crate::ajedrez::Ajedrez;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
     match resultado_ajedrez(args) {
         Ok(resultado) => {
-            println!("Resultado? {}", resultado);
+            println!("{}", resultado);
         }
         Err(e) => {
             println!("{}", e);
@@ -26,7 +26,7 @@ fn main() {
     }
 }
 
-fn resultado_ajedrez(args: Vec<String>) -> Result<ResultadoAjedrez, AjedrezError>{
+fn resultado_ajedrez(args: Vec<String>) -> Result<ResultadoAjedrez, AjedrezError> {
     let filename = parse_args::parse_args(args)?;
     let ajedrez = Ajedrez::new(filename)?;
     let resultado = ajedrez.resultado()?;

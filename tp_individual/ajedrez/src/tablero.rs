@@ -101,7 +101,7 @@ fn test_casilla_pieza_blanca() {
 
 #[test]
 fn test_casilla_pieza_negra() {
-    let tablero2 = Tablero::new(String::from("src/tests/test_files/test3.txt"));
+    let tablero2 = Tablero::new(String::from("src/test_files/test3.txt"));
     let casillas_pieza_blanca = tablero2.get_casilla_pieza_negra();
     assert_eq!(casillas_pieza_blanca.coordenadas.x, 4);
     assert_eq!(casillas_pieza_blanca.coordenadas.y, 3);

@@ -12,12 +12,19 @@ pub struct Coordenadas {
     pub y: i8,
 }
 
+/// Representa a cada casilla del tablero
+/// Incluye las correspondientes coordenadas
+/// En caso de tener una pieza ubicada en la casilla, tambien incluye los datos de la misma
 impl Casilla {
     pub fn new(x: i8, y: i8, pieza: Option<Pieza>) -> Self {
         let coordenadas = Coordenadas { x, y };
         Casilla { coordenadas, pieza }
     }
 
+    /// Devuelve TRUE en caso que la pieza ubicada en la casilla pueda capturar a cualquier pieza ubicada en la casilla de destino
+    ///
+    /// # Argumento
+    /// * `casilla_destino` - Una Casilla que indique la casilla de destino
     pub fn puedo_capturar(&self, casilla_destino: &Casilla) -> bool {
         let pieza_propia = &self
             .pieza

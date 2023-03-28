@@ -10,7 +10,16 @@ pub enum TipoPieza {
     Caballo,
 }
 
+/// Representa al tipo de pieza de ajedrez
 impl TipoPieza {
+    /// Devuelve TRUE si la pieza ubicada en las coordenadas de origen
+    /// pueden capturar a cualquier pieza ubicada en la coordenada de destino
+    /// según el color que le corresponda
+    ///
+    /// # Argumentos
+    /// * `color` - Color de la pieza
+    /// * `origen` - Coordenada de origen de la pieza
+    /// * `destino` - Coordenada de destino de la pieza
     pub fn puede_capturar(
         &self,
         color: &Color,
@@ -34,6 +43,14 @@ impl TipoPieza {
         }
     }
 
+    /// Devuelve TRUE si el rey ubicado en las coordenadas de origen
+    /// pueden capturar a cualquier pieza ubicada en la coordenada de destino
+    /// según el color que le corresponda
+    ///
+    /// # Argumentos
+    /// * `color` - Color de la pieza
+    /// * `origen` - Coordenada de origen de la pieza
+    /// * `destino` - Coordenada de destino de la pieza
     fn captura_rey(origen: &Coordenadas, destino: &Coordenadas) -> bool {
         if origen == destino {
             return false;
@@ -47,20 +64,52 @@ impl TipoPieza {
         false
     }
 
+    /// Devuelve TRUE si la reina ubicada en las coordenadas de origen
+    /// pueden capturar a cualquier pieza ubicada en la coordenada de destino
+    /// según el color que le corresponda
+    ///
+    /// # Argumentos
+    /// * `color` - Color de la pieza
+    /// * `origen` - Coordenada de origen de la pieza
+    /// * `destino` - Coordenada de destino de la pieza
     fn captura_reina(origen: &Coordenadas, destino: &Coordenadas) -> bool {
         let diagonal = TipoPieza::captura_diagonal(origen, destino);
         let recto = TipoPieza::captura_recto(origen, destino);
         diagonal || recto
     }
 
+    /// Devuelve TRUE si el alfil ubicado en las coordenadas de origen
+    /// pueden capturar a cualquier pieza ubicada en la coordenada de destino
+    /// según el color que le corresponda
+    ///
+    /// # Argumentos
+    /// * `color` - Color de la pieza
+    /// * `origen` - Coordenada de origen de la pieza
+    /// * `destino` - Coordenada de destino de la pieza
     fn captura_alfil(origen: &Coordenadas, destino: &Coordenadas) -> bool {
         TipoPieza::captura_diagonal(origen, destino)
     }
 
+    /// Devuelve TRUE si la torre ubicada en las coordenadas de origen
+    /// pueden capturar a cualquier pieza ubicada en la coordenada de destino
+    /// según el color que le corresponda
+    ///
+    /// # Argumentos
+    /// * `color` - Color de la pieza
+    /// * `origen` - Coordenada de origen de la pieza
+    /// * `destino` - Coordenada de destino de la pieza
     fn captura_torre(origen: &Coordenadas, destino: &Coordenadas) -> bool {
         TipoPieza::captura_recto(origen, destino)
     }
 
+    /// Devuelve TRUE si el caballo ubicado en las coordenadas de origen
+    /// pueden capturar a cualquier pieza ubicada en la coordenada de destino
+    /// según el color que le corresponda
+    ///
+    /// # Argumentos
+    /// * `color` - Color de la pieza
+    /// * `origen` - Coordenada de origen de la pieza
+    /// * `destino` - Coordenada de destino de la pieza
     fn captura_caballo(origen: &Coordenadas, destino: &Coordenadas) -> bool {
         let delta_x = (origen.x - destino.x).abs();
         let delta_y = (origen.y - destino.y).abs();
@@ -71,6 +120,14 @@ impl TipoPieza {
         captura_x || captura_y
     }
 
+    /// Devuelve TRUE si el peón ubicado en las coordenadas de origen
+    /// pueden capturar a cualquier pieza ubicada en la coordenada de destino
+    /// según el color que le corresponda
+    ///
+    /// # Argumentos
+    /// * `color` - Color de la pieza
+    /// * `origen` - Coordenada de origen de la pieza
+    /// * `destino` - Coordenada de destino de la pieza
     fn captura_peon(color: &Color, origen: &Coordenadas, destino: &Coordenadas) -> bool {
         if *color == Color::Blanco {
             return TipoPieza::captura_peon_blanco(origen, destino);
@@ -81,6 +138,13 @@ impl TipoPieza {
         false
     }
 
+    /// Devuelve TRUE si el peón blanco ubicado en las coordenadas de origen
+    /// pueden capturar a cualquier pieza ubicada en la coordenada de destino
+    /// según el color que le corresponda
+    ///
+    /// # Argumentos
+    /// * `origen` - Coordenada de origen de la pieza
+    /// * `destino` - Coordenada de destino de la pieza
     fn captura_peon_blanco(origen: &Coordenadas, destino: &Coordenadas) -> bool {
         // captura para arriba, o sea, disminuyendo el eje x
         let movimiento_x = origen.x - destino.x;
@@ -88,6 +152,13 @@ impl TipoPieza {
         movimiento_x == 1 && delta_y == 1
     }
 
+    /// Devuelve TRUE si el peón negro ubicado en las coordenadas de origen
+    /// pueden capturar a cualquier pieza ubicada en la coordenada de destino
+    /// según el color que le corresponda
+    ///
+    /// # Argumentos
+    /// * `origen` - Coordenada de origen de la pieza
+    /// * `destino` - Coordenada de destino de la pieza
     fn captura_peon_negro(origen: &Coordenadas, destino: &Coordenadas) -> bool {
         // captura para abajo, o sea, aumentando el eje x
         let movimiento_x = origen.x - destino.x;
@@ -95,6 +166,12 @@ impl TipoPieza {
         movimiento_x == -1 && delta_y == 1
     }
 
+    /// Devuelve TRUE si la pieza ubicada en las coordenadas de origen
+    /// se encuentra en la misma diagonal que la coordenada de destino
+    ///
+    /// # Argumentos
+    /// * `origen` - Coordenada de origen de la pieza
+    /// * `destino` - Coordenada de destino de la pieza
     fn captura_diagonal(origen: &Coordenadas, destino: &Coordenadas) -> bool {
         if origen == destino {
             return false;
@@ -108,6 +185,12 @@ impl TipoPieza {
         false
     }
 
+    /// Devuelve TRUE si la pieza ubicada en las coordenadas de origen
+    /// se encuentra en la misma fila o columna que la coordenada de destino
+    ///
+    /// # Argumentos
+    /// * `origen` - Coordenada de origen de la pieza
+    /// * `destino` - Coordenada de destino de la pieza
     fn captura_recto(origen: &Coordenadas, destino: &Coordenadas) -> bool {
         if origen == destino {
             return false;

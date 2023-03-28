@@ -7,6 +7,8 @@ pub struct ArchivoTablero {
     pub texto_casilla: Vec<Vec<String>>,
 }
 
+/// Representa a cada casilla del tablero
+/// Leyendo desde el archivo pasado por parametro
 impl ArchivoTablero {
     pub fn new(filename: String) -> ArchivoTablero {
         let file = File::open(filename).expect("No existe el archivo");

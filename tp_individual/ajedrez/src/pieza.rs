@@ -12,20 +12,42 @@ pub enum Color {
     Negro,
 }
 
+/// Representa a una pieza de ajedrez
+/// Incluye el tipo de pieza y el color correspondiente
 impl Pieza {
     pub fn new(tipo_pieza: TipoPieza, color: Color) -> Self {
         Pieza { tipo_pieza, color }
     }
 
+    /// Devuelve TRUE en caso que la pieza sea de color blanco
     pub fn es_blanca(&self) -> bool {
         self.color == Color::Blanco
     }
 
+    /// Devuelve TRUE en caso que la pieza sea de color negro
     pub fn _es_negra(&self) -> bool {
         self.color == Color::Negro
     }
 }
 
+/// Crea la pieza según la letra y el color según si es mayúscula
+///
+/// # Argumento
+/// * `texto_casilla` - Un puntero a str que indique una letra válida
+///
+/// Las letras válidas son:
+/// R: Rey Blanco
+/// Q: Reina Blanca
+/// P: Peón Blanco
+/// A: Alfil Blanco
+/// C: Caballo Blanco
+/// T: Torre Blanca
+/// r: Rey Negro
+/// q: Reina Negra
+/// p: Peón Negro
+/// a: Alfil Negro
+/// c: Caballo Negro
+/// t: Torre Negra
 pub fn factory_pieza(texto_casilla: &str) -> Option<Pieza> {
     match texto_casilla {
         "R" => Some(Pieza::new(TipoPieza::Rey, Color::Blanco)),

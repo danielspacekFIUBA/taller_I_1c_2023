@@ -6,6 +6,7 @@ pub struct Tablero {
     pub casillas: Vec<Vec<Casilla>>,
 }
 
+/// Representa al tablero con sus correspondientes casillas
 impl Tablero {
     pub fn new(filename: String) -> Self {
         let archivo_tablero = ArchivoTablero::new(filename);
@@ -28,6 +29,7 @@ impl Tablero {
         Tablero { casillas }
     }
 
+    /// Retorna las casillas que tienen piezas
     pub fn get_casillas_ocupadas(&self) -> Vec<&Casilla> {
         let mut casillas_ocupadas: Vec<&Casilla> = Vec::new();
         for fila in &self.casillas {
@@ -40,6 +42,7 @@ impl Tablero {
         casillas_ocupadas
     }
 
+    /// Retorna la casilla que contiene a la pieza blanca
     pub fn get_casilla_pieza_blanca(&self) -> &Casilla {
         let casillas_ocupadas = self.get_casillas_ocupadas();
         let casilla_default = &self.casillas[0][0];
@@ -56,6 +59,7 @@ impl Tablero {
         casilla_default
     }
 
+    /// Retorna la casilla que contiene a la pieza negra
     pub fn get_casilla_pieza_negra(&self) -> &Casilla {
         let casillas_ocupadas = self.get_casillas_ocupadas();
         let casilla_default = &self.casillas[0][0];
@@ -97,7 +101,7 @@ fn test_casilla_pieza_blanca() {
 
 #[test]
 fn test_casilla_pieza_negra() {
-    let tablero2 = Tablero::new(String::from("src/test_files/test3.txt"));
+    let tablero2 = Tablero::new(String::from("src/tests/test_files/test3.txt"));
     let casillas_pieza_blanca = tablero2.get_casilla_pieza_negra();
     assert_eq!(casillas_pieza_blanca.coordenadas.x, 4);
     assert_eq!(casillas_pieza_blanca.coordenadas.y, 3);

@@ -66,8 +66,8 @@ fn test_archivos_tableros_validos() {
     assert!(archivo_test1_result.is_ok());
     let archivo_test1 = archivo_test1_result.unwrap();
     assert_eq!(archivo_test1.texto_casilla[0][0], "_");
-    assert_eq!(archivo_test1.texto_casilla[1][0], "Q");
-    assert_eq!(archivo_test1.texto_casilla[4][3], "r");
+    assert_eq!(archivo_test1.texto_casilla[1][0], "d");
+    assert_eq!(archivo_test1.texto_casilla[4][3], "R");
     assert_eq!(archivo_test1.texto_casilla[7][7], "_");
 
     let archivo_test2_result = ArchivoTablero::new(String::from("src/test_files/test2.txt"));

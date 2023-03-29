@@ -43,8 +43,8 @@ impl Ajedrez {
     /// Devuelve TRUE si la pieza blanca puede capturar a la pieza negra
     /// En caso contrario retorna FALSE
     fn pieza_blanca_puede_capturar(&self) -> bool {
-        if let Ok(casilla_pieza_blanca) = self.tablero.get_casilla_pieza_blanca(){
-            if let Ok(casilla_pieza_negra) = self.tablero.get_casilla_pieza_negra(){
+        if let Ok(casilla_pieza_blanca) = self.tablero.get_casilla_pieza_blanca() {
+            if let Ok(casilla_pieza_negra) = self.tablero.get_casilla_pieza_negra() {
                 casilla_pieza_blanca.puedo_capturar(casilla_pieza_negra)
             } else {
                 false
@@ -57,8 +57,8 @@ impl Ajedrez {
     /// Devuelve TRUE si la pieza negra puede capturar a la pieza blanca
     /// En caso contrario retorna FALSE
     fn pieza_negra_puede_capturar(&self) -> bool {
-        if let Ok(casilla_pieza_blanca) = self.tablero.get_casilla_pieza_blanca(){
-            if let Ok(casilla_pieza_negra) = self.tablero.get_casilla_pieza_negra(){
+        if let Ok(casilla_pieza_blanca) = self.tablero.get_casilla_pieza_blanca() {
+            if let Ok(casilla_pieza_negra) = self.tablero.get_casilla_pieza_negra() {
                 casilla_pieza_negra.puedo_capturar(casilla_pieza_blanca)
             } else {
                 false

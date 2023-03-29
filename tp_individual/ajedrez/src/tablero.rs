@@ -118,8 +118,8 @@ fn test_casilla_pieza_blanca() {
     assert!(casillas_pieza_blanca_result.is_ok());
 
     let casillas_pieza_blanca = casillas_pieza_blanca_result.unwrap();
-    assert_eq!(casillas_pieza_blanca.coordenadas.x, 0);
-    assert_eq!(casillas_pieza_blanca.coordenadas.y, 0);
+    assert_eq!(casillas_pieza_blanca.coordenadas.x, 4);
+    assert_eq!(casillas_pieza_blanca.coordenadas.y, 3);
 }
 
 #[test]
@@ -132,6 +132,6 @@ fn test_casilla_pieza_negra() {
     assert!(casillas_pieza_negra_result.is_ok());
 
     let casillas_pieza_negra = casillas_pieza_negra_result.unwrap();
-    assert_eq!(casillas_pieza_negra.coordenadas.x, 4);
-    assert_eq!(casillas_pieza_negra.coordenadas.y, 3);
+    assert_eq!(casillas_pieza_negra.coordenadas.x, 0);
+    assert_eq!(casillas_pieza_negra.coordenadas.y, 0);
 }

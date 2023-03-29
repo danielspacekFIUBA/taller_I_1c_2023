@@ -50,18 +50,18 @@ impl Pieza {
 /// t: Torre Negra
 pub fn factory_pieza(texto_casilla: &str) -> Option<Pieza> {
     match texto_casilla {
-        "R" => Some(Pieza::new(TipoPieza::Rey, Color::Blanco)),
-        "Q" => Some(Pieza::new(TipoPieza::Reina, Color::Blanco)),
-        "P" => Some(Pieza::new(TipoPieza::Peon, Color::Blanco)),
-        "A" => Some(Pieza::new(TipoPieza::Alfil, Color::Blanco)),
-        "T" => Some(Pieza::new(TipoPieza::Torre, Color::Blanco)),
-        "C" => Some(Pieza::new(TipoPieza::Caballo, Color::Blanco)),
-        "r" => Some(Pieza::new(TipoPieza::Rey, Color::Negro)),
-        "q" => Some(Pieza::new(TipoPieza::Reina, Color::Negro)),
-        "p" => Some(Pieza::new(TipoPieza::Peon, Color::Negro)),
-        "a" => Some(Pieza::new(TipoPieza::Alfil, Color::Negro)),
-        "t" => Some(Pieza::new(TipoPieza::Torre, Color::Negro)),
-        "c" => Some(Pieza::new(TipoPieza::Caballo, Color::Negro)),
+        "R" => Some(Pieza::new(TipoPieza::Rey, Color::Negro)),
+        "D" => Some(Pieza::new(TipoPieza::Reina, Color::Negro)),
+        "A" => Some(Pieza::new(TipoPieza::Alfil, Color::Negro)),
+        "C" => Some(Pieza::new(TipoPieza::Caballo, Color::Negro)),
+        "T" => Some(Pieza::new(TipoPieza::Torre, Color::Negro)),
+        "P" => Some(Pieza::new(TipoPieza::Peon, Color::Negro)),
+        "r" => Some(Pieza::new(TipoPieza::Rey, Color::Blanco)),
+        "d" => Some(Pieza::new(TipoPieza::Reina, Color::Blanco)),
+        "a" => Some(Pieza::new(TipoPieza::Alfil, Color::Blanco)),
+        "c" => Some(Pieza::new(TipoPieza::Caballo, Color::Blanco)),
+        "t" => Some(Pieza::new(TipoPieza::Torre, Color::Blanco)),
+        "p" => Some(Pieza::new(TipoPieza::Peon, Color::Blanco)),
         _ => None,
     }
 }
@@ -70,23 +70,23 @@ pub fn factory_pieza(texto_casilla: &str) -> Option<Pieza> {
 fn test_pieza() {
     let pieza1 = factory_pieza("R");
     assert!(pieza1.is_some());
-    assert_ne!(pieza1, Some(Pieza::new(TipoPieza::Rey, Color::Negro)));
-    assert_eq!(pieza1, Some(Pieza::new(TipoPieza::Rey, Color::Blanco)));
+    assert_ne!(pieza1, Some(Pieza::new(TipoPieza::Rey, Color::Blanco)));
+    assert_eq!(pieza1, Some(Pieza::new(TipoPieza::Rey, Color::Negro)));
 
     let pieza2 = factory_pieza("r");
     assert!(pieza2.is_some());
-    assert_ne!(pieza2, Some(Pieza::new(TipoPieza::Rey, Color::Blanco)));
-    assert_eq!(pieza2, Some(Pieza::new(TipoPieza::Rey, Color::Negro)));
+    assert_ne!(pieza2, Some(Pieza::new(TipoPieza::Rey, Color::Negro)));
+    assert_eq!(pieza2, Some(Pieza::new(TipoPieza::Rey, Color::Blanco)));
 
-    let pieza3 = factory_pieza("Q");
+    let pieza3 = factory_pieza("D");
     assert!(pieza3.is_some());
-    assert_ne!(pieza3, Some(Pieza::new(TipoPieza::Torre, Color::Blanco)));
-    assert_eq!(pieza3, Some(Pieza::new(TipoPieza::Reina, Color::Blanco)));
+    assert_ne!(pieza3, Some(Pieza::new(TipoPieza::Torre, Color::Negro)));
+    assert_eq!(pieza3, Some(Pieza::new(TipoPieza::Reina, Color::Negro)));
 
     let pieza4 = factory_pieza("t");
     assert!(pieza4.is_some());
-    assert_ne!(pieza4, Some(Pieza::new(TipoPieza::Torre, Color::Blanco)));
-    assert_eq!(pieza4, Some(Pieza::new(TipoPieza::Torre, Color::Negro)));
+    assert_ne!(pieza4, Some(Pieza::new(TipoPieza::Torre, Color::Negro)));
+    assert_eq!(pieza4, Some(Pieza::new(TipoPieza::Torre, Color::Blanco)));
 
     let pieza5 = factory_pieza("_");
     assert!(pieza5.is_none());

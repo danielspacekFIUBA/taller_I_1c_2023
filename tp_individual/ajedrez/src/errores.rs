@@ -7,6 +7,7 @@ pub enum AjedrezError {
     FormatFile,
     NoResult,
     FaltanPiezas,
+    SobranPiezas,
 }
 
 impl Error for AjedrezError {}
@@ -28,6 +29,9 @@ impl fmt::Display for AjedrezError {
             }
             AjedrezError::FaltanPiezas => {
                 write!(f, "ERROR Piezas faltantes.")
+            }
+            AjedrezError::SobranPiezas => {
+                write!(f, "ERROR Piezas sobrantes.")
             }
         }
     }

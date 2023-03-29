@@ -28,15 +28,23 @@ impl Tablero {
             i += 1;
         }
         let tablero = Tablero { casillas };
-        if !tablero.is_valid() {
-            return Err(AjedrezError::FaltanPiezas);
-        }
+        tablero.valid()?;
         Ok(tablero)
     }
 
     /// Retorna TRUE si el tableo es válido
-    fn is_valid(&self) -> bool {
-        self.get_casillas_ocupadas().len() == 2
+    /// Para ser válido tiene que tener 2 piezas
+    /// Una de cada color
+    fn valid(&self) -> Result<bool, AjedrezError> {
+        if self.get_casillas_ocupadas().len() < 2 {
+            return Err(AjedrezError::FaltanPiezas);
+        }
+        if self.get_casillas_ocupadas().len() > 2 {
+            return Err(AjedrezError::SobranPiezas);
+        }
+        self.get_casilla_pieza_blanca()?;
+        self.get_casilla_pieza_negra()?;
+        Ok(true)
     }
 
     /// Retorna las casillas que tienen piezas
@@ -53,46 +61,42 @@ impl Tablero {
     }
 
     /// Retorna la casilla que contiene a la pieza blanca
-    pub fn get_casilla_pieza_blanca(&self) -> &Casilla {
+    pub fn get_casilla_pieza_blanca(&self) -> Result<&Casilla, AjedrezError> {
         let casillas_ocupadas = self.get_casillas_ocupadas();
-        let casilla_default = &self.casillas[0][0];
         for casilla in casillas_ocupadas {
-            let es_blanca = &casilla
-                .pieza
-                .as_ref()
-                .expect("Error al obtener la pieza")
-                .es_blanca();
-            if *es_blanca {
-                return casilla;
+            if let Some(pieza) = &casilla.pieza {
+                if pieza.es_blanca() {
+                    return Ok(casilla);
+                }
+            } else {
+                return Err(AjedrezError::FaltanPiezas);
             }
         }
-        casilla_default
+        Err(AjedrezError::FaltanPiezas)
     }
 
     /// Retorna la casilla que contiene a la pieza negra
-    pub fn get_casilla_pieza_negra(&self) -> &Casilla {
+    pub fn get_casilla_pieza_negra(&self) -> Result<&Casilla, AjedrezError> {
         let casillas_ocupadas = self.get_casillas_ocupadas();
-        let casilla_default = &self.casillas[0][0];
         for casilla in casillas_ocupadas {
-            let es_blanca = &casilla
-                .pieza
-                .as_ref()
-                .expect("Error al obtener la pieza")
-                .es_blanca();
-            if !*es_blanca {
-                return casilla;
+            if let Some(pieza) = &casilla.pieza {
+                if pieza.es_negra() {
+                    return Ok(casilla);
+                }
+            } else {
+                return Err(AjedrezError::FaltanPiezas);
             }
         }
-        casilla_default
+        Err(AjedrezError::FaltanPiezas)
     }
 }
 
-//#[test]
-// fn test_tableros() {
-//     test_casillas_ocupadas();
-//     test_casilla_pieza_blanca();
-//     test_casilla_pieza_negra();
-// }
+#[test]
+fn test_tableros() {
+    test_casillas_ocupadas();
+    test_casilla_pieza_blanca();
+    test_casilla_pieza_negra();
+}
 
 #[test]
 fn test_casillas_ocupadas() {
@@ -110,7 +114,10 @@ fn test_casilla_pieza_blanca() {
     assert!(tablero_result.is_ok());
 
     let tablero = tablero_result.unwrap();
-    let casillas_pieza_blanca = tablero.get_casilla_pieza_blanca();
+    let casillas_pieza_blanca_result = tablero.get_casilla_pieza_blanca();
+    assert!(casillas_pieza_blanca_result.is_ok());
+
+    let casillas_pieza_blanca = casillas_pieza_blanca_result.unwrap();
     assert_eq!(casillas_pieza_blanca.coordenadas.x, 0);
     assert_eq!(casillas_pieza_blanca.coordenadas.y, 0);
 }
@@ -121,7 +128,10 @@ fn test_casilla_pieza_negra() {
     assert!(tablero_result.is_ok());
 
     let tablero = tablero_result.unwrap();
-    let casillas_pieza_negra = tablero.get_casilla_pieza_negra();
+    let casillas_pieza_negra_result = tablero.get_casilla_pieza_negra();
+    assert!(casillas_pieza_negra_result.is_ok());
+
+    let casillas_pieza_negra = casillas_pieza_negra_result.unwrap();
     assert_eq!(casillas_pieza_negra.coordenadas.x, 4);
     assert_eq!(casillas_pieza_negra.coordenadas.y, 3);
 }

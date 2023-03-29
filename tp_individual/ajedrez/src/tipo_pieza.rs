@@ -1,6 +1,8 @@
+use std::collections::HashMap;
+
 use crate::{casilla::Coordenadas, pieza::Color};
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq, Hash)]
 pub enum TipoPieza {
     Rey,
     Reina,
@@ -26,21 +28,40 @@ impl TipoPieza {
         origen: &Coordenadas,
         destino: &Coordenadas,
     ) -> bool {
-        if self == &TipoPieza::Rey {
-            TipoPieza::captura_rey(origen, destino)
-        } else if self == &TipoPieza::Reina {
-            TipoPieza::captura_reina(origen, destino)
-        } else if self == &TipoPieza::Alfil {
-            TipoPieza::captura_alfil(origen, destino)
-        } else if self == &TipoPieza::Torre {
-            TipoPieza::captura_torre(origen, destino)
-        } else if self == &TipoPieza::Caballo {
-            TipoPieza::captura_caballo(origen, destino)
-        } else if self == &TipoPieza::Peon {
-            TipoPieza::captura_peon(color, origen, destino)
+        let mapeo = TipoPieza::hash_piezas(color, origen, destino);
+        let puede_capturar_mapeo = mapeo.get(self);
+        if let Some(puede_capturar) = puede_capturar_mapeo {
+            *puede_capturar
         } else {
             false
         }
+    }
+
+    /// Mapeo de las piezas y los métodos de captura
+    ///
+    /// # Argumentos
+    /// * `color` - Color de la pieza
+    /// * `origen` - Coordenada de origen de la pieza
+    /// * `destino` - Coordenada de destino de la pieza
+    fn hash_piezas(
+        color: &Color,
+        origen: &Coordenadas,
+        destino: &Coordenadas,
+    ) -> HashMap<TipoPieza, bool> {
+        let mut mapeo = HashMap::new();
+        mapeo.insert(TipoPieza::Rey, TipoPieza::captura_rey(origen, destino));
+        mapeo.insert(TipoPieza::Reina, TipoPieza::captura_reina(origen, destino));
+        mapeo.insert(
+            TipoPieza::Peon,
+            TipoPieza::captura_peon(color, origen, destino),
+        );
+        mapeo.insert(
+            TipoPieza::Caballo,
+            TipoPieza::captura_caballo(origen, destino),
+        );
+        mapeo.insert(TipoPieza::Alfil, TipoPieza::captura_alfil(origen, destino));
+        mapeo.insert(TipoPieza::Torre, TipoPieza::captura_torre(origen, destino));
+        mapeo
     }
 
     /// Devuelve TRUE si el rey ubicado en las coordenadas de origen

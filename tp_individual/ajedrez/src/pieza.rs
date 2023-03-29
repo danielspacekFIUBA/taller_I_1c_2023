@@ -25,7 +25,7 @@ impl Pieza {
     }
 
     /// Devuelve TRUE en caso que la pieza sea de color negro
-    pub fn _es_negra(&self) -> bool {
+    pub fn es_negra(&self) -> bool {
         self.color == Color::Negro
     }
 }

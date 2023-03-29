@@ -26,20 +26,15 @@ impl Casilla {
     /// # Argumento
     /// * `casilla_destino` - Una Casilla que indique la casilla de destino
     pub fn puedo_capturar(&self, casilla_destino: &Casilla) -> bool {
-        let pieza_propia = &self
-            .pieza
-            .as_ref()
-            .expect("Error al obtener la pieza")
-            .tipo_pieza;
-        let color = &self
-            .pieza
-            .as_ref()
-            .expect("Error al obtener la pieza")
-            .color;
-        let origen = &self.coordenadas;
-        let destino = &casilla_destino.coordenadas;
-
-        pieza_propia.puede_capturar(color, origen, destino)
+        if let Some(pieza) = &self.pieza {
+            let pieza_propia = &pieza.tipo_pieza;
+            let color = &pieza.color;
+            let origen = &self.coordenadas;
+            let destino = &casilla_destino.coordenadas;
+            pieza_propia.puede_capturar(color, origen, destino)
+        } else {
+            false
+        }
     }
 }
 

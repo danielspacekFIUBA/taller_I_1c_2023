@@ -1,3 +1,4 @@
+use crate::errores::AjedrezError;
 use crate::pieza::{self};
 use crate::{archivo_tablero::ArchivoTablero, casilla::Casilla};
 
@@ -8,8 +9,8 @@ pub struct Tablero {
 
 /// Representa al tablero con sus correspondientes casillas
 impl Tablero {
-    pub fn new(filename: String) -> Self {
-        let archivo_tablero = ArchivoTablero::new(filename);
+    pub fn new(filename: String) -> Result<Self, AjedrezError> {
+        let archivo_tablero = ArchivoTablero::new(filename)?;
         let mut casillas: Vec<Vec<Casilla>> = Vec::with_capacity(8);
         let mut i: i8 = 0;
         let mut j: i8 = 0;
@@ -26,7 +27,16 @@ impl Tablero {
             j = 0;
             i += 1;
         }
-        Tablero { casillas }
+        let tablero = Tablero { casillas };
+        if !tablero.is_valid() {
+            return Err(AjedrezError::FaltanPiezas);
+        }
+        Ok(tablero)
+    }
+
+    /// Retorna TRUE si el tableo es válido
+    fn is_valid(&self) -> bool {
+        self.get_casillas_ocupadas().len() == 2
     }
 
     /// Retorna las casillas que tienen piezas
@@ -77,32 +87,41 @@ impl Tablero {
     }
 }
 
-#[test]
-fn test_tableros() {
-    test_casillas_ocupadas();
-    test_casilla_pieza_blanca();
-    test_casilla_pieza_negra();
-}
+//#[test]
+// fn test_tableros() {
+//     test_casillas_ocupadas();
+//     test_casilla_pieza_blanca();
+//     test_casilla_pieza_negra();
+// }
 
 #[test]
 fn test_casillas_ocupadas() {
-    let tablero2 = Tablero::new(String::from("src/test_files/test3.txt"));
-    let casillas_ocupadas2 = tablero2.get_casillas_ocupadas();
+    let tablero_result = Tablero::new(String::from("src/test_files/test3.txt"));
+    assert!(tablero_result.is_ok());
+
+    let tablero = tablero_result.unwrap();
+    let casillas_ocupadas2 = tablero.get_casillas_ocupadas();
     assert_eq!(casillas_ocupadas2.len(), 2);
 }
 
 #[test]
 fn test_casilla_pieza_blanca() {
-    let tablero2 = Tablero::new(String::from("src/test_files/test3.txt"));
-    let casillas_pieza_blanca = tablero2.get_casilla_pieza_blanca();
+    let tablero_result = Tablero::new(String::from("src/test_files/test3.txt"));
+    assert!(tablero_result.is_ok());
+
+    let tablero = tablero_result.unwrap();
+    let casillas_pieza_blanca = tablero.get_casilla_pieza_blanca();
     assert_eq!(casillas_pieza_blanca.coordenadas.x, 0);
     assert_eq!(casillas_pieza_blanca.coordenadas.y, 0);
 }
 
 #[test]
 fn test_casilla_pieza_negra() {
-    let tablero2 = Tablero::new(String::from("src/test_files/test3.txt"));
-    let casillas_pieza_blanca = tablero2.get_casilla_pieza_negra();
-    assert_eq!(casillas_pieza_blanca.coordenadas.x, 4);
-    assert_eq!(casillas_pieza_blanca.coordenadas.y, 3);
+    let tablero_result = Tablero::new(String::from("src/test_files/test3.txt"));
+    assert!(tablero_result.is_ok());
+
+    let tablero = tablero_result.unwrap();
+    let casillas_pieza_negra = tablero.get_casilla_pieza_negra();
+    assert_eq!(casillas_pieza_negra.coordenadas.x, 4);
+    assert_eq!(casillas_pieza_negra.coordenadas.y, 3);
 }

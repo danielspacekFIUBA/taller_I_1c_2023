@@ -1,9 +1,12 @@
 use std::{error::Error, fmt};
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum AjedrezError {
-    NoArgumentError,
-    NoResultError,
+    NoArgument,
+    NoExisteArchivo,
+    FormatFile,
+    NoResult,
+    FaltanPiezas,
 }
 
 impl Error for AjedrezError {}
@@ -11,11 +14,20 @@ impl Error for AjedrezError {}
 impl fmt::Display for AjedrezError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            AjedrezError::NoArgumentError => {
+            AjedrezError::NoArgument => {
                 write!(f, "ERROR No se especificó el nombre del archivo.")
             }
-            AjedrezError::NoResultError => {
+            AjedrezError::NoResult => {
                 write!(f, "ERROR No se obtuvo ningún resultado válido.")
+            }
+            AjedrezError::NoExisteArchivo => {
+                write!(f, "ERROR No existe el archivo especificado.")
+            }
+            AjedrezError::FormatFile => {
+                write!(f, "ERROR Formato de archivo incompatible.")
+            }
+            AjedrezError::FaltanPiezas => {
+                write!(f, "ERROR Piezas faltantes.")
             }
         }
     }

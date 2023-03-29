@@ -36,7 +36,7 @@ impl fmt::Display for ResultadoAjedrez {
 /// Represeta al tablero de ajedrez y sus fichas
 impl Ajedrez {
     pub fn new(filename: String) -> Result<Self, AjedrezError> {
-        let tablero = Tablero::new(filename);
+        let tablero = Tablero::new(filename)?;
         Ok(Ajedrez { tablero })
     }
 
@@ -83,7 +83,7 @@ impl Ajedrez {
         if self.pieza_negra_puede_capturar() {
             return Ok(ResultadoAjedrez::GanaNegra);
         }
-        Err(AjedrezError::NoResultError)
+        Err(AjedrezError::NoResult)
     }
 }
 
@@ -97,84 +97,96 @@ fn test_ajedrez() {
 
 #[test]
 fn test_ajedrez_gana_blanca() {
-    let mut gana_blanca1 = false;
-    if let Ok(ajedrez1) = Ajedrez::new(String::from("src/test_files/test1.txt")) {
-        gana_blanca1 = ajedrez1.pieza_blanca_puede_capturar();
-    }
+    let ajedrez1_result = Ajedrez::new(String::from("src/test_files/test1.txt"));
+    assert!(ajedrez1_result.is_ok());
+
+    let ajedrez1 = ajedrez1_result.unwrap();
+    let gana_blanca1 = ajedrez1.pieza_blanca_puede_capturar();
     assert!(gana_blanca1);
 
-    let mut gana_blanca2 = false;
-    if let Ok(ajedrez2) = Ajedrez::new(String::from("src/test_files/test2.txt")) {
-        gana_blanca2 = ajedrez2.pieza_blanca_puede_capturar();
-    }
+    let ajedrez2_result = Ajedrez::new(String::from("src/test_files/test2.txt"));
+    assert!(ajedrez2_result.is_ok());
+
+    let ajedrez2 = ajedrez2_result.unwrap();
+    let gana_blanca2 = ajedrez2.pieza_blanca_puede_capturar();
     assert!(!gana_blanca2);
 
-    let mut gana_blanca3 = false;
-    if let Ok(ajedrez3) = Ajedrez::new(String::from("src/test_files/test4.txt")) {
-        gana_blanca3 = ajedrez3.pieza_blanca_puede_capturar();
-    }
+    let ajedrez3_result = Ajedrez::new(String::from("src/test_files/test4.txt"));
+    assert!(ajedrez3_result.is_ok());
+
+    let ajedrez3 = ajedrez3_result.unwrap();
+    let gana_blanca3 = ajedrez3.pieza_blanca_puede_capturar();
     assert!(!gana_blanca3);
 }
 
 #[test]
 fn test_ajedrez_gana_negra() {
-    let mut gana_negra1 = false;
-    if let Ok(ajedrez1) = Ajedrez::new(String::from("src/test_files/test1.txt")) {
-        gana_negra1 = ajedrez1.pieza_negra_puede_capturar();
-    }
+    let ajedrez1_result = Ajedrez::new(String::from("src/test_files/test1.txt"));
+    assert!(ajedrez1_result.is_ok());
+
+    let ajedrez1 = ajedrez1_result.unwrap();
+    let gana_negra1 = ajedrez1.pieza_negra_puede_capturar();
     assert!(!gana_negra1);
 
-    let mut gana_negra2 = false;
-    if let Ok(ajedrez2) = Ajedrez::new(String::from("src/test_files/test2.txt")) {
-        gana_negra2 = ajedrez2.pieza_negra_puede_capturar();
-    }
+    let ajedrez2_result = Ajedrez::new(String::from("src/test_files/test2.txt"));
+    assert!(ajedrez2_result.is_ok());
+
+    let ajedrez2 = ajedrez2_result.unwrap();
+    let gana_negra2 = ajedrez2.pieza_negra_puede_capturar();
     assert!(!gana_negra2);
 
-    let mut gana_negra3 = false;
-    if let Ok(ajedrez3) = Ajedrez::new(String::from("src/test_files/test4.txt")) {
-        gana_negra3 = ajedrez3.pieza_negra_puede_capturar();
-    }
+    let ajedrez3_result = Ajedrez::new(String::from("src/test_files/test4.txt"));
+    assert!(ajedrez3_result.is_ok());
+
+    let ajedrez3 = ajedrez3_result.unwrap();
+    let gana_negra3 = ajedrez3.pieza_negra_puede_capturar();
     assert!(gana_negra3);
 }
 
 #[test]
 fn test_ajedrez_ganan_todos() {
-    let mut ganan_todos1 = false;
-    if let Ok(ajedrez1) = Ajedrez::new(String::from("src/test_files/test5.txt")) {
-        ganan_todos1 = ajedrez1.ganan_todos();
-    }
+    let ajedrez1_result = Ajedrez::new(String::from("src/test_files/test5.txt"));
+    assert!(ajedrez1_result.is_ok());
+
+    let ajedrez1 = ajedrez1_result.unwrap();
+    let ganan_todos1 = ajedrez1.ganan_todos();
     assert!(ganan_todos1);
 
-    let mut ganan_todos2 = false;
-    if let Ok(ajedrez2) = Ajedrez::new(String::from("src/test_files/test6.txt")) {
-        ganan_todos2 = ajedrez2.ganan_todos();
-    }
+    let ajedrez2_result = Ajedrez::new(String::from("src/test_files/test6.txt"));
+    assert!(ajedrez2_result.is_ok());
+
+    let ajedrez2 = ajedrez2_result.unwrap();
+    let ganan_todos2 = ajedrez2.ganan_todos();
     assert!(ganan_todos2);
 
-    let mut no_ganan_todos = true;
-    if let Ok(ajedrez3) = Ajedrez::new(String::from("src/test_files/test4.txt")) {
-        no_ganan_todos = ajedrez3.ganan_todos();
-    }
+    let ajedrez3_result = Ajedrez::new(String::from("src/test_files/test4.txt"));
+    assert!(ajedrez3_result.is_ok());
+
+    let ajedrez3 = ajedrez3_result.unwrap();
+    let no_ganan_todos = ajedrez3.ganan_todos();
     assert!(!no_ganan_todos);
 }
 
 #[test]
 fn test_ajedrez_pierden_todos() {
-    let mut pierden_todos1 = false;
-    if let Ok(ajedrez1) = Ajedrez::new(String::from("src/test_files/test2.txt")) {
-        pierden_todos1 = ajedrez1.pierden_todos();
-    }
+    let ajedrez1_result = Ajedrez::new(String::from("src/test_files/test2.txt"));
+    assert!(ajedrez1_result.is_ok());
+
+    let ajedrez1 = ajedrez1_result.unwrap();
+    let pierden_todos1 = ajedrez1.pierden_todos();
     assert!(pierden_todos1);
 
-    let mut pierden_todos2 = false;
-    if let Ok(ajedrez2) = Ajedrez::new(String::from("src/test_files/test3.txt")) {
-        pierden_todos2 = ajedrez2.pierden_todos();
-    }
+    let ajedrez2_result = Ajedrez::new(String::from("src/test_files/test3.txt"));
+    assert!(ajedrez2_result.is_ok());
+
+    let ajedrez2 = ajedrez2_result.unwrap();
+    let pierden_todos2 = ajedrez2.pierden_todos();
     assert!(pierden_todos2);
 
-    let mut no_pierden_todos = true;
-    if let Ok(ajedrez3) = Ajedrez::new(String::from("src/test_files/test4.txt")) {
-        no_pierden_todos = ajedrez3.pierden_todos();
-    }
+    let ajedrez3_result = Ajedrez::new(String::from("src/test_files/test4.txt"));
+    assert!(ajedrez3_result.is_ok());
+
+    let ajedrez3 = ajedrez3_result.unwrap();
+    let no_pierden_todos = ajedrez3.pierden_todos();
     assert!(!no_pierden_todos);
 }

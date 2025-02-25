@@ -5,12 +5,26 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug",
             "type": "lldb",
             "request": "launch",
-            "name": "Debug",
-            "program": "${workspaceFolder}/<executable file>",
-            "args": [],
-            "cwd": "${workspaceFolder}"
+            "program": "${workspaceFolder}/target/debug/ajedrez",
+            "args": [
+                "./src/ejemplos/ej1.txt"
+            ],
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "rust: cargo build"
+        },
+        {
+            "name": "Full Debug",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/target/debug/ajedrez",
+            "args": [
+                "./src/ejemplos/ej1.txt"
+            ],
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "full build"
         }
     ]
 }

@@ -6,3 +6,11 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+cairo-rs = "0.17.0"
+gio = "0.17.9"
+gio-sys = "0.17.4"
+glib = "0.17.9"
+glib-sys = "0.17.4"
+gobject-sys = "0.17.4"
+gtk = "0.17.1"
+pango = "0.17.4"
